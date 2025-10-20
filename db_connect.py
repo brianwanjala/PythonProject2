@@ -1,24 +1,30 @@
-import random
+nums = [1,9,5,3,8,6]
+pos = 0
+n = 1
+def sort(nums):
+    for i in range(len(nums)):
+        for j in range(i):
+            if nums[j] > nums[i]:
+                nums[j],nums[i] = nums[i], nums[j]
+    return nums
+sort(nums)
+print(f'new list is: {nums}')
 
-print(" Welcome to the Number Guessing Game!")
-print("you have upto five attempts to guess the number")
-# The program picks a random number between 1 and 20
-correct_number = random.randint(1, 10)
-maximum_attempts = 3
-attempts = 0
-
-while True:
-    guess = int(input('\n'"Guess a number between 1 and 20: "))
-    attempts += 1
-
-    if guess == correct_number:
-        print(f"🎉 Correct! You guessed the number in {attempts} attempts.")
-        score = max(100 - (attempts - 1) * 10, 0)  # simple scoring system
-        print(f"Your score: {score}")
-        break
-    elif guess < correct_number:
-        print("Too low! Try again.")
-    else:
-        print("Too high! Try again.")
-    if attempts == maximum_attempts:
-        print(f"too many attempts! the correct number is, {correct_number}")
+def search(nums, n):
+    l = 0
+    u = len(nums)-1
+    while l <= u:
+        mid_index = (l+u)//2
+        if nums[mid_index] == n:
+            globals()["pos"] = mid_index +1
+            return True
+        else:
+            if nums[mid_index] < n:
+                l = mid_index + 1
+            else:
+                u = mid_index - 1
+    return False
+if search(sort(nums), n):
+    print(f"found at {pos}")
+else:
+    print("not found")

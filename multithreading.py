@@ -1,25 +1,26 @@
-import pymysql
-#establish connection
-connection = pymysql.connect(host="localhost",
-                          user = "root",
-                          password = "@Njoroschool22",
-                          database= "testdb"   )
+import threading
+import time
+def walking_dog(f):
+    time.sleep(4)
+    print(f"You finished walking {f}")
 
-try:
-    #create a cursor
-    cursor = connection.cursor()
-    print("Connection successful")
+def taking_out_trash():
+    print(f'You got out the trash')
+    time.sleep(3)
+def cooking():
+    print(f"Cooking is done")
+    time.sleep(2)
 
-    #Connect to database
-    cursor.execute("SELECT DATABASE();")
-    db_name = cursor.fetchone()
-    print(f"Connected to database {db_name}")
+walking = threading.Thread(target= walking_dog, args=("John",))
+walking.start()
 
-except pymysql.MySQLError as e:
-    print(f"Failed to connect to Mysql! {e}")
+trash = threading.Thread(target= taking_out_trash())
+trash.start()
 
-finally:
-    if connection:
-        connection.close()
-        print("Connection closed")
+cook = threading.Thread(target= cooking())
+cook.start()
+
+walking.join()
+print("Goodbye")
+
 
