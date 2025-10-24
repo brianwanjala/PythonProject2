@@ -1,11 +1,33 @@
 import os
 
-print(os.getcwd())
-os.chdir(r"C:\Users\k\OneDrive\Pictures\Camera Roll")
-print(os.getcwd())
+# Set the target folder
+target_folder = r"C:\Users\k\OneDrive\Pictures\Camera Roll"
 
-for i in os.listdir():
+# Change to the target directory
+os.chdir(target_folder)
+print(f"Current working directory: {os.getcwd()}")
 
-    os.rename(i, "new_video" + i)
-print("files have been renamed successfully")
+# Prefix to add to each file
+prefix = "new_video_"
 
+# Counter for optional numbering (if needed)
+count = 1
+
+for filename in os.listdir():
+    # Skip directories
+    if os.path.isdir(filename):
+        continue
+
+    # Get file extension
+    name, ext = os.path.splitext(filename)
+
+    # Create the new name
+    new_name = f"{prefix}{count}{ext}"
+
+    # Rename the file
+    os.rename(filename, new_name)
+    print(f"Renamed: {filename} → {new_name}")
+
+    count += 1
+
+print("✅ All files have been renamed successfully!")
